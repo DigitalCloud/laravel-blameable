@@ -72,9 +72,9 @@ class Post extends Model
 By using `DigitalCloud\Blameable\Traits\Blameable` in your model, the package will check if the model table has the blameable columns (by default, `created_by` and `updated_by`), and if the columns not existed, they will be added automatically to the table.
 after adding the columns, the package will fill those columns automatically after creating nd updating the model.
 
-### note:
+### Note:
 
-The package allow you to add blame columns to your migrations, using blameable() functions, for example:
+The package allow you to add blame columns to your migrations, using `blameable()` functions, for example:
 
 ```php
 
