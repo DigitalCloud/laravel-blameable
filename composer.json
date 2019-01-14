@@ -1,0 +1,32 @@
+{
+    "name": "digitalcloud/laravel-blameable",
+    "description": "Laravel package allow you to add created/updated by attributes on eloquent models",
+    "keywords": [
+        "laravel",
+        "package",
+        "creator",
+        "blameable",
+        "eloquent"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DigitalCloud\\Blameable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DigitalCloud\\Blameable\\BlameableServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
