@@ -2,6 +2,7 @@
 
 namespace DigitalCloud\Blameable;
 
+use DigitalCloud\Blameable\Commands\AddBlameableColumns;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +16,10 @@ class BlameableServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->registerMacroHelpers();
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([AddBlameableColumns::class]);
+        }
 
     }
 

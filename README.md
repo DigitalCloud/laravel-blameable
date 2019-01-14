@@ -41,17 +41,21 @@ return [
     'column_names' => [
         'createdByAttribute' => 'created_by',
         'updatedByAttribute' => 'updated_by',
-    ]
+    ],
+     'models' => [
+         'user' => \App\User::class
+     ]
 ];
 
 ```
 
 You can update the columns names in this file, or you can stack with default names.
+If you are not using the default laravel `App\User` model you need to provide the model class.
 
 
 ## Usage Example
 
-All you need to use this package, is adding the `DigitalCloud\Blameable\Traits\Blameable` trait to your model(s). For example:
+First, you need to add the `DigitalCloud\Blameable\Traits\Blameable` trait to your model(s). For example:
 
 ```php
 
@@ -69,8 +73,31 @@ class Post extends Model
 
 ```
 
-By using `DigitalCloud\Blameable\Traits\Blameable` in your model, the package will check if the model table has the blameable columns (by default, `created_by` and `updated_by`), and if the columns not existed, they will be added automatically to the table.
-after adding the columns, the package will fill those columns automatically after creating nd updating the model.
+Then, you need to update the database table for the model and add the required columns. Luckily we provide two ways to do this task:
+
+* By using console command and provide the model which you need to add columns:
+
+    ```bash
+      php artisan blameable:add-blameable-columns App\Post
+    ```
+    
+* By calling `addBlameableColumns()` on the model uses `DigitalCloud\Blameable\Traits\Blameable` trait:
+
+    ```php
+      \App\Post::addBlameableColumns();
+    ```
+
+By using `DigitalCloud\Blameable\Traits\Blameable` in your model, the package will fill those columns automatically after creating nd updating the model.
+
+## Relations
+
+To get the creator/editor instance you can use:
+
+```php
+$post = \App\Post::find(1);
+$cretor = $post->creator;
+$editor = $post->editor;
+```
 
 ### Note:
 
