@@ -34,7 +34,6 @@ You can publish the config file with:
 When published, the config/blameable.php config file contains:
 
 ```php
-
 <?php
 
 return [
@@ -58,7 +57,6 @@ If you are not using the default laravel `App\User` model you need to provide th
 First, you need to add the `DigitalCloud\Blameable\Traits\Blameable` trait to your model(s). For example:
 
 ```php
-
 <?php
 
 namespace App;
@@ -73,7 +71,7 @@ class Post extends Model
 
 ```
 
-Then, you need to update the database table for the model and add the required columns. Luckily we provide two ways to do this task:
+Then, you need to make sure that the database table for the model has the required columns. Luckily we provide two ways to do this task:
 
 * By using console command and provide the model which you need to add columns:
 
