@@ -1,3 +1,6 @@
+[![Latest Stable Version](https://poser.pugx.org/digitalcloud/laravel-blameable/v/stable)](https://packagist.org/packages/digitalcloud/laravel-blameable)
+[![Total Downloads](https://poser.pugx.org/digitalcloud/laravel-blameable/downloads)](https://packagist.org/packages/digitalcloud/laravel-blameable)
+
 # Laravel Blameable.
 
 This package allow you to track the creator and updater of eloquent models.
