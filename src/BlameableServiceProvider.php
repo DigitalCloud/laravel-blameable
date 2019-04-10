@@ -34,6 +34,7 @@ class BlameableServiceProvider extends ServiceProvider
         Blueprint::macro('blameable', function () {
             $this->unsignedBigInteger(Config::get('blameable.column_names.createdByAttribute', 'created_by'))->nullable();
             $this->unsignedBigInteger(Config::get('blameable.column_names.updatedByAttribute', 'updated_by'))->nullable();
+            $this->unsignedBigInteger(Config::get('blameable.column_names.deletedByAttribute', 'deleted_by'))->nullable();
         });
     }
 

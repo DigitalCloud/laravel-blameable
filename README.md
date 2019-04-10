@@ -3,7 +3,7 @@
 
 # Laravel Blameable.
 
-This package allow you to track the creator and updater of eloquent models.
+This package allow you to track the creator, updater and deleter of eloquent models.
 
 ## Installation
 
@@ -43,6 +43,7 @@ return [
     'column_names' => [
         'createdByAttribute' => 'created_by',
         'updatedByAttribute' => 'updated_by',
+        'deletedByAttribute' => 'deleted_by',
     ],
      'models' => [
          'user' => \App\User::class
@@ -88,7 +89,7 @@ Then, you need to make sure that the database table for the model has the requir
       \App\Post::addBlameableColumns();
     ```
 
-By using `DigitalCloud\Blameable\Traits\Blameable` in your model, the package will fill those columns automatically after creating nd updating the model.
+By using `DigitalCloud\Blameable\Traits\Blameable` in your model, the package will fill those columns automatically after creating, updating and deleting the model.
 
 ## Relations
 
@@ -98,6 +99,7 @@ To get the creator/editor instance you can use:
 $post = \App\Post::find(1);
 $cretor = $post->creator;
 $editor = $post->editor;
+$editor = $post->deletor;
 ```
 
 ### Note:
@@ -107,7 +109,7 @@ The package allow you to add blame columns to your migrations, using `blameable(
 ```php
 
     Schema::table($table, function (Blueprint $table) {
-        // this will add created_by and updated_by columns on your table.
+        // this will add created_by, updated_by and updated_by columns on your table.
         $table->blameable();
     });
             

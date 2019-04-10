@@ -24,23 +24,36 @@ trait Blameable
             $updatedByAttribute = Config::get('blameable.column_names.updatedByAttribute', 'updated_by');
             $model->$updatedByAttribute = Auth::id();
         });
+
+        if (static::usesSoftDelete()) {
+            static::deleting(function ($model) {
+                $deletedByAttribute = Config::get('blameable.column_names.deletedByAttribute', 'deleted_by');
+                $model->$deletedByAttribute = Auth::id();
+                $model->save();
+            });
+        }
     }
 
     public static function checkBlameableColumns() {
         $table = (new static)->getTable();
         $createdByAttribute = Config::get('blameable.column_names.createdByAttribute', 'created_by');
         $updatedByAttribute = Config::get('blameable.column_names.updatedByAttribute', 'updated_by');
-        if (!Schema::hasColumn($table, $createdByAttribute) && !Schema::hasColumn($table, $updatedByAttribute)) {
+        $deletedByAttribute = Config::get('blameable.column_names.deletedByAttribute', 'deleted_by');
+        if (!Schema::hasColumn($table, $createdByAttribute)
+            && !Schema::hasColumn($table, $updatedByAttribute)
+            && !Schema::hasColumn($table, $deletedByAttribute)) {
             //
         }
     }
-
 
     public static function addBlameableColumns() {
         $table = (new static)->getTable();
         $createdByAttribute = Config::get('blameable.column_names.createdByAttribute', 'created_by');
         $updatedByAttribute = Config::get('blameable.column_names.updatedByAttribute', 'updated_by');
-        if (!Schema::hasColumn($table, $createdByAttribute) && !Schema::hasColumn($table, $updatedByAttribute)) {
+        $deletedByAttribute = Config::get('blameable.column_names.deletedByAttribute', 'deleted_by');
+        if (!Schema::hasColumn($table, $createdByAttribute)
+            && !Schema::hasColumn($table, $updatedByAttribute)
+            && !Schema::hasColumn($table, $deletedByAttribute)) {
             Schema::table($table, function (Blueprint $table) {
                 $table->blameable();
             });
@@ -57,5 +70,20 @@ trait Blameable
         return $this->belongsTo($userModel, 'updated_by', 'id');
     }
 
+    public function deletor() {
+        $userModel = Config::get('blameable.models.user', User::class);
+        return $this->belongsTo($userModel, 'deleted_by', 'id');
+    }
 
+    protected static function usesSoftDelete()
+    {
+        static $softDelete;
+
+        if (is_null($softDelete)) {
+            $instance = new static;
+            return $softDelete = method_exists($instance, 'bootSoftDeletes');
+        }
+
+        return $softDelete;
+    }
 }
