@@ -97,9 +97,9 @@ To get the creator/editor instance you can use:
 
 ```php
 $post = \App\Post::find(1);
-$cretor = $post->creator;
+$creator = $post->creator;
 $editor = $post->editor;
-$editor = $post->deletor;
+$deletor = $post->deletor;
 ```
 
 ### Note:
