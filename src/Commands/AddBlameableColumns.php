@@ -11,7 +11,7 @@ class AddBlameableColumns extends Command
     protected $signature = 'blameable:add-blameable-columns
         {model : The name of the model}';
 
-    protected $description = 'add blameable columns to eloquent models, by default, created_by and updated_by';
+    protected $description = 'add blameable columns to eloquent models, by default, created_by, updated_by and deleted_by';
 
     public function handle()
     {
@@ -19,7 +19,10 @@ class AddBlameableColumns extends Command
         $table = (new $model)->getTable();
         $createdByAttribute = Config::get('blameable.column_names.createdByAttribute', 'created_by');
         $updatedByAttribute = Config::get('blameable.column_names.updatedByAttribute', 'updated_by');
-        if (!Schema::hasColumn($table, $createdByAttribute) && !Schema::hasColumn($table, $updatedByAttribute)) {
+        $deletedByAttribute = Config::get('blameable.column_names.deletedByAttribute', 'deleted_by');
+        if (!Schema::hasColumn($table, $createdByAttribute) 
+            && !Schema::hasColumn($table, $updatedByAttribute)
+            && !Schema::hasColumn($table, $deletedByAttribute)) {
             Schema::table($table, function (Blueprint $table) {
                 $table->blameable();
             });
