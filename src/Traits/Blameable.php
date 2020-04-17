@@ -13,8 +13,6 @@ trait Blameable
 
     public static function bootBlameable()
     {
-        static::checkBlameableColumns();
-
         static::creating(function ($model) {
             $createdByAttribute = Config::get('blameable.column_names.createdByAttribute', 'created_by');
             $model->$createdByAttribute = Auth::id();
@@ -31,18 +29,6 @@ trait Blameable
                 $model->$deletedByAttribute = Auth::id();
                 $model->save();
             });
-        }
-    }
-
-    public static function checkBlameableColumns() {
-        $table = (new static)->getTable();
-        $createdByAttribute = Config::get('blameable.column_names.createdByAttribute', 'created_by');
-        $updatedByAttribute = Config::get('blameable.column_names.updatedByAttribute', 'updated_by');
-        $deletedByAttribute = Config::get('blameable.column_names.deletedByAttribute', 'deleted_by');
-        if (!Schema::hasColumn($table, $createdByAttribute)
-            && !Schema::hasColumn($table, $updatedByAttribute)
-            && !Schema::hasColumn($table, $deletedByAttribute)) {
-            //
         }
     }
 
