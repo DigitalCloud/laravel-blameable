@@ -109,7 +109,7 @@ The package allow you to add blame columns to your migrations, using `blameable(
 ```php
 
     Schema::table($table, function (Blueprint $table) {
-        // this will add created_by, updated_by and updated_by columns on your table.
+        // this will add created_by and updated_by columns on your table.
         $table->blameable();
     });
             
