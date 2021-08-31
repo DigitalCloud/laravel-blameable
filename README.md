@@ -3,7 +3,7 @@
 
 # Laravel Blameable.
 
-This package allow you to track the creator, updater and deleter of eloquent models.
+This package allows you to track the creator, updater and deleter of eloquent models.
 
 ## Installation
 
@@ -46,14 +46,14 @@ return [
         'deletedByAttribute' => 'deleted_by',
     ],
      'models' => [
-         'user' => \App\User::class
+         'user' => \App\Models\User::class
      ]
 ];
 
 ```
 
 You can update the columns names in this file, or you can stack with default names.
-If you are not using the default laravel `App\User` model you need to provide the model class.
+If you are not using the default laravel `App\Models\User` model you need to provide the model class.
 
 
 ## Usage Example
@@ -63,7 +63,7 @@ First, you need to add the `DigitalCloud\Blameable\Traits\Blameable` trait to yo
 ```php
 <?php
 
-namespace App;
+namespace App\Models;
 
 use DigitalCloud\Blameable\Traits\Blameable;
 use Illuminate\Database\Eloquent\Model;
@@ -77,10 +77,10 @@ class Post extends Model
 
 Then, you need to make sure that the database table for the model has the required columns. Luckily we provide two ways to do this task:
 
-* By using console command and provide the model which you need to add columns:
+* By using console command and providing the model to which you need the columns added:
 
     ```bash
-      php artisan blameable:add-blameable-columns App\Post
+      php artisan blameable:add-blameable-columns App\Models\Post
     ```
     
 * By calling `addBlameableColumns()` on the model uses `DigitalCloud\Blameable\Traits\Blameable` trait:
@@ -93,10 +93,10 @@ By using `DigitalCloud\Blameable\Traits\Blameable` in your model, the package wi
 
 ## Relations
 
-To get the creator/editor instance you can use:
+To get the creator, editor and/or deleter instance, you can use:
 
 ```php
-$post = \App\Post::find(1);
+$post = \App\Models\Post::find(1);
 $creator = $post->creator;
 $editor = $post->editor;
 $deletor = $post->deletor;
@@ -104,12 +104,12 @@ $deletor = $post->deletor;
 
 ### Note:
 
-The package allow you to add blame columns to your migrations, using `blameable()` functions, for example:
+The package allows you to add blame columns to your migrations, using `blameable()` functions, for example:
 
 ```php
 
     Schema::table($table, function (Blueprint $table) {
-        // this will add created_by, updated_by and updated_by columns on your table.
+        // this will add created_by, updated_by and deleted_by columns on your table.
         $table->blameable();
     });
             
