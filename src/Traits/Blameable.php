@@ -2,7 +2,7 @@
 
 namespace DigitalCloud\Blameable\Traits;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
